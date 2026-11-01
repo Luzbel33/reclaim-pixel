@@ -1,0 +1,351 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #76796c;
+  background: #fff;
+  color-scheme: light;
+  --page: #fff;
+  --text: #69725f;
+  --track: #f0efeb;
+  --accent: #67794d;
+  --border: #dadcd1;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  height: 100dvh;
+  min-height: 460px;
+  overflow: hidden;
+}
+header {
+  position: absolute;
+  z-index: 2;
+  top: 23px;
+  left: 32px;
+  right: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wordmark {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+.wordmark > span {
+  letter-spacing: 0.2px;
+  font-size: 10px;
+  margin-left: 17px;
+  color: #717965;
+}
+.actions {
+  display: flex;
+  gap: 4px;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
+}
+button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: block;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+canvas:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+button:hover {
+  color: var(--accent);
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 45px 20px 40px;
+  gap: 3px;
+}
+#city {
+  display: block;
+  width: min(960px, calc(100vw - 32px), calc((100dvh - 185px) * 1.333333));
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  touch-action: none;
+  cursor: grab;
+}
+#city:active {
+  cursor: grabbing;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-top: 0;
+}
+#play {
+  color: #949b86;
+  opacity: 0.7;
+  padding: 12px;
+}
+#play svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  stroke-width: 0;
+}
+#play:hover {
+  opacity: 1;
+}
+.track {
+  position: relative;
+  width: 232px;
+  height: 28px;
+  background: var(--track);
+  border-radius: 8px;
+}
+.ticks {
+  position: absolute;
+  inset: 0;
+  line-height: 23px;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
+  color: #bbbeb1;
+  font-size: 12px;
+  pointer-events: none;
+}
+input[type='range'] {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  margin: 0;
+  padding: 0 3px;
+  cursor: ew-resize;
+  border-radius: 8px;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  height: 24px;
+  background: none;
+}
+input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  background: var(--page);
+  border: 1.5px solid var(--accent);
+  border-radius: 6px;
+  box-shadow: 0 1px 2px #53613920;
+}
+input[type='range']::-moz-range-track {
+  height: 24px;
+  background: transparent;
+}
+input[type='range']::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background: var(--page);
+  border: 1.5px solid var(--accent);
+  border-radius: 6px;
+}
+#date {
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  font-variant-numeric: tabular-nums;
+  padding-left: 7px;
+  min-width: 48px;
+}
+.camera-controls {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  color: #79816e;
+}
+.camera-controls svg {
+  width: 15px;
+  height: 15px;
+}
+.camera-controls > span {
+  height: 14px;
+  width: 1px;
+  background: var(--border);
+  margin: 0 8px;
+}
+footer {
+  position: absolute;
+  left: 32px;
+  right: 25px;
+  bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #717965;
+}
+footer a {
+  color: var(--text);
+  padding: 14px 10px;
+  font: inherit;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+footer a span {
+  margin-left: 5px;
+}
+dialog {
+  color: var(--text);
+  background: var(--page);
+  border: 1px solid var(--border);
+  padding: 35px;
+  max-width: 430px;
+  border-radius: 7px;
+}
+dialog::backdrop {
+  background: #39472e35;
+  backdrop-filter: blur(3px);
+}
+dialog h1 {
+  font:
+    normal 28px Georgia,
+    serif;
+  color: var(--accent);
+}
+dialog p {
+  font-size: 12px;
+  line-height: 1.8;
+}
+dialog a {
+  color: var(--accent);
+}
+dialog .subtle {
+  font-size: 10px;
+  color: #999e91;
+}
+#close {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  font-size: 24px;
+}
+body.night {
+  --page: #172127;
+  --text: #bec9b1;
+  --track: #263336;
+  --accent: #b4bf91;
+  --border: #465651;
+  color-scheme: dark;
+}
+body.night footer,
+body.night .wordmark > span,
+body.night .camera-controls {
+  color: #a0ae95;
+}
+@media (max-width: 600px) {
+  header {
+    left: 20px;
+    right: 10px;
+    top: 13px;
+  }
+  .wordmark > span {
+    display: none;
+  }
+  main {
+    padding: 70px 0;
+    gap: 12px;
+  }
+  #city {
+    width: 100vw;
+  }
+  .track {
+    width: 200px;
+  }
+  footer {
+    left: 20px;
+    right: 8px;
+    bottom: 9px;
+    font-size: 9px;
+  }
+  #camera-hint {
+    font-size: 0;
+    max-width: 200px;
+  }
+  #camera-hint:after {
+    content: 'Drag to orbit & tilt · Pinch to zoom';
+    font-size: 9px;
+  }
+  footer a {
+    font-size: 9px;
+  }
+  dialog {
+    max-width: calc(100vw - 32px);
+    padding: 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto;
+  }
+}
+
+@media (max-width: 380px) {
+  .camera-controls > span {
+    margin: 0 2px;
+  }
+  .camera-controls button {
+    min-width: 40px;
+  }
+}
+@media (max-height: 495px) and (orientation: landscape) {
+  body {
+    min-height: 280px;
+  }
+  header {
+    top: 3px;
+    left: 14px;
+    right: 10px;
+  }
+  main {
+    padding: 8px 0 27px;
+    gap: 0;
+  }
+  #city {
+    width: min(88vw, calc((100dvh - 119px) * 1.333333));
+  }
+  .camera-controls button {
+    min-height: 34px;
+  }
+  footer {
+    bottom: 0;
+  }
+}

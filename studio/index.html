@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Reclaim — Film renderer</title>
+    <style>
+      body {
+        font: 16px/1.6 system-ui;
+        color: #48513f;
+        background: #f8f8f3;
+        max-width: 36rem;
+        margin: 12vh auto;
+        padding: 1.5rem;
+      }
+      h1 {
+        font: normal 2.6rem Georgia;
+      }
+      button,
+      a {
+        font: inherit;
+        color: inherit;
+      }
+      button {
+        padding: 0.55rem 1rem;
+        cursor: pointer;
+      }
+      progress {
+        display: block;
+        width: 100%;
+        margin-top: 2rem;
+      }
+      a {
+        display: inline-block;
+        margin: 1rem 0;
+      }
+      [hidden] {
+        display: none;
+      }
+    </style>
+    <script defer src="../fracture.js"></script>
+    <script defer src="../masonry.js"></script>
+    <script defer src="../city.js"></script>
+    <script defer src="mp4.js"></script>
+    <script defer src="film.js"></script>
+    <script defer src="render.js"></script>
+  </head>
+  <body>
+    <p>RECLAIM / PRODUCTION</p>
+    <h1>Render the film.</h1>
+    <p>
+      Render all 576 frames from the city and the camera score. The result is a silent, 24-second
+      H.264 film. Render speed does not change the timeline.
+    </p>
+    <button id="start">Render MP4</button> <button id="cancel" hidden>Cancel render</button
+    ><progress id="progress" max="576" value="0"></progress>
+    <p id="status" role="status">Ready.</p>
+    <a id="save" download="reclaim.mp4" hidden>Save rendered MP4</a><br /><a href="../index.html"
+      >Return to the city</a
+    >
+  </body>
+</html>

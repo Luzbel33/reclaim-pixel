@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Reclaim — A Century After Us</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23728153' d='m8 2 7 4v4l-7 4-7-4V6z'/%3E%3Cpath fill='%239baa68' d='m8 2 7 4-7 4-7-4z'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="fracture.js"></script>
+    <script defer src="masonry.js"></script>
+    <script defer src="city.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header>
+      <span class="wordmark">RECLAIM<span>A century after us</span></span>
+      <div class="actions">
+        <button id="night" aria-label="Switch to night" aria-pressed="false" title="Day / night">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"
+            />
+          </svg>
+        </button>
+        <button id="info" aria-label="About Reclaim" title="About Reclaim">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="8" />
+            <path d="M12 10v7m0-10v.5" />
+          </svg>
+        </button>
+      </div>
+    </header>
+    <main>
+      <canvas
+        id="city"
+        width="480"
+        height="360"
+        role="img"
+        tabindex="0"
+        aria-label="A pixel-art city in 2056"
+        aria-describedby="camera-hint"
+      ></canvas>
+      <section class="controls" aria-label="Timeline">
+        <button id="play" aria-label="Play the timeline" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path id="play-path" d="m9 6 9 6-9 6Z" />
+          </svg>
+        </button>
+        <div class="track">
+          <input
+            id="year"
+            type="range"
+            min="2026"
+            max="2126"
+            value="2056"
+            step="1"
+            aria-label="Year"
+          /><span class="ticks" aria-hidden="true">·　·　·　·　·　·　·　·　·</span>
+        </div>
+        <output id="date" for="year">2056</output>
+      </section>
+      <nav class="camera-controls" aria-label="Camera">
+        <button id="turn-left" aria-label="Rotate left" title="Rotate left 90°">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 2 8M4 4v6h6" /></svg>
+        </button>
+        <button id="turn-right" aria-label="Rotate right" title="Rotate right 90°">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 10a8 8 0 1 0-2 8m2-14v6h-6" />
+          </svg>
+        </button>
+        <span aria-hidden="true"></span>
+        <button id="tilt-up" aria-label="Raise camera" title="Look from higher up">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m8 9 4-4 4 4m-4-4v10M3 17q9 5 18 0" />
+          </svg>
+        </button>
+        <button id="tilt-down" aria-label="Lower camera" title="Look from lower down">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m8 10 4 4 4-4m-4 4V4M3 17q9 5 18 0" />
+          </svg>
+        </button>
+        <span aria-hidden="true"></span>
+        <button id="zoom-out" aria-label="Zoom out" title="Zoom out">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10" cy="10" r="6" />
+            <path d="m15 15 6 6M7 10h6" />
+          </svg>
+        </button>
+        <button id="zoom-in" aria-label="Zoom in" title="Zoom in">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10" cy="10" r="6" />
+            <path d="m15 15 6 6M7 10h6m-3-3v6" />
+          </svg>
+        </button>
+        <button id="reset" aria-label="Reset camera" title="Reset camera">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9V4h5m6 0h5v5m0 6v5h-5M9 20H4v-5" />
+          </svg>
+        </button>
+      </nav>
+    </main>
+    <footer>
+      <span id="camera-hint">Drag to orbit &amp; tilt · Scroll to zoom · Shift + drag to pan</span
+      ><a id="film" href="media/reclaim.mp4" download
+        >Download film <span aria-hidden="true">↗</span></a
+      >
+    </footer>
+    <dialog id="about">
+      <button id="close" aria-label="Close">×</button>
+      <h1>A century after us.</h1>
+      <p>
+        The last buses cross the square. Mortar opens along the old brickworks. A corner peels away
+        from the tower, and its walls come to rest in the street. Wind and birds keep moving.
+      </p>
+      <p>
+        Scrub the year to follow a fracture in either direction. Ferns take root on exposed floors
+        after the rubble settles. Drag sideways to orbit, down to raise the camera, or up to lower
+        it. Scroll or pinch to zoom; Shift + drag to pan. With the scene focused, use the arrow
+        keys, +/− and Home.
+      </p>
+      <p>
+        An original Canvas 2D study inspired by
+        <a href="https://x.com/zzzzshawn/status/2116436345082302946" target="_blank" rel="noopener"
+          >Post Humans by @zzzzshawn</a
+        >.
+      </p>
+      <p><a href="BENCHMARK.md" download>Download the benchmark prompt ↗</a></p>
+    </dialog>
+  </body>
+</html>

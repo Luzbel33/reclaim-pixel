@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Reclaim — Field checks</title>
+    <style>
+      body {
+        font: 15px/1.6 system-ui;
+        color: #48513f;
+        max-width: 72rem;
+        margin: 3rem auto;
+        padding: 0 1.5rem;
+      }
+      h1 {
+        font: normal 2.5rem Georgia;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      button,
+      a {
+        font: inherit;
+        color: inherit;
+      }
+      button {
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+      }
+      li {
+        margin: 0.28rem 0;
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    </style>
+    <script defer src="../fracture.js"></script>
+    <script defer src="../masonry.js"></script>
+    <script defer src="../city.js"></script>
+    <script defer src="checks.js"></script>
+  </head>
+  <body>
+    <p>RECLAIM / FIELD CHECKS</p>
+    <h1>Follow the same piece twice.</h1>
+    <button id="run">Run checks</button>
+    <p id="result" role="status">Ready.</p>
+    <ul id="checks"></ul>
+    <canvas id="plate" width="1260" height="540" hidden></canvas>
+    <nav id="exports"></nav>
+    <p><a href="../index.html">Return to the city</a></p>
+  </body>
+</html>

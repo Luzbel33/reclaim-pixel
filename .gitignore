@@ -1,0 +1,4 @@
+# Local social drafts and reference comparisons do not belong in the release.
+/press/
+.DS_Store
+Thumbs.db
