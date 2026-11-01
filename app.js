@@ -103,7 +103,7 @@
         offsetX: c.offsetX + (dx * 480) / r.width,
         offsetY: c.offsetY + (dy * 360) / r.height,
       });
-    } else orbit((dx * 3.8) / r.width, (dy * 64) / r.height);
+    } else orbit((-dx * 3.8) / r.width, (dy * 64) / r.height);
     pointers.set(e.pointerId, next);
   });
   for (const type of ['pointerup', 'pointercancel', 'lostpointercapture'])
