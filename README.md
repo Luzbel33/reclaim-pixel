@@ -1,8 +1,37 @@
 # Reclaim · A Century After Us
 
-In 2026, the fountain runs and the last bus still crosses the square. A century later, you can look through the side of the tower and find ferns growing where the third floor used to meet the wall. Drag the year backward. Every piece finds its way home.
+Inspired by **[Post Humans by @zzzzshawn](https://x.com/zzzzshawn/status/2116436345082302946)**. Shawn’s piece is where the idea for this recreation came from: one floating city block, with a slider to watch it age. **[Play the original on Forge](https://forge.ui8.ai/share/frag_704ba1d5-05f4-44bf-bc62-34322dfaa1e1)**.
 
-**[Explore the city](https://luzbel33.github.io/reclaim-pixel/)** · [Watch the 24-second film](https://luzbel33.github.io/reclaim-pixel/media/reclaim.mp4) · [Try the benchmark](BENCHMARK.md)
+Reclaim is my independent interpretation, built iteratively with Codex. It follows one block from 2026 to 2126: people cross the square, parts of buildings fall into the street, and ferns take root upstairs. Drag the timeline backward to put it all back.
+
+**[Play Reclaim](https://luzbel33.github.io/reclaim-pixel/)** · [Watch 100 years in 18 seconds](https://luzbel33.github.io/reclaim-pixel/media/reclaim.mp4) · [Copy the prompt](#reproduction-prompt) · [Comparison protocol](BENCHMARK.md)
+
+## Reproduction prompt
+
+This is the consolidated brief from our iterations, not a transcript of a single prompt. Give a model the [original interactive reference](https://forge.ui8.ai/share/frag_704ba1d5-05f4-44bf-bc62-34322dfaa1e1) and the following text:
+
+~~~text
+Reference: Post Humans by @zzzzshawn
+https://forge.ui8.ai/share/frag_704ba1d5-05f4-44bf-bc62-34322dfaa1e1
+
+Build an interactive isometric pixel-art city inspired by the reference. Keep its small
+floating block, muted palette, clean background and year slider. Use original Canvas 2D
+drawing code and a fixed seed; no image assets, sprites, models or external services.
+Keep hard pixel edges at a native width of 376–512 pixels.
+
+Let me move through 2026–2126 in either direction. Show people walking, traffic and a
+working fountain early on; later, show wildlife and trees with dimensional crowns rooted
+outside the buildings. Keep the same streets, buildings and landmarks throughout.
+
+Some buildings must fail locally. Preserve the height of surviving floors. Split real
+walls, slabs and roof sections into rigid pieces, show them fall and leave persistent
+rubble. After a room opens and its debris settles, let vegetation grow on a supported
+floor. Rewinding must restore both the structure and the plant life exactly.
+
+Provide 360° orbit, vertical camera tilt, zoom, pan, keyboard controls, play/pause and
+reduced motion. Dragging down raises the camera; dragging up lowers it. Deliver the
+working demo in English, the source, a short film and reproducible evidence.
+~~~
 
 ![The same isometric pixel city in 2026 and 2126: the busy market square becomes a wooded block with a torn-open tower.](media/cover.png)
 
@@ -38,7 +67,3 @@ The city is drawn to a **480 × 360 Canvas 2D**. Streets, people, foliage and fa
 | `masonry.js`  | Facade materials, exposed rooms, airborne pieces, dust and plants                                                                                                                             |
 | `app.js`      | Timeline, camera gestures, keyboard input and reduced motion                                                                                                                                  |
 | `studio/`     | [Ten reproducible field checks](https://luzbel33.github.io/reclaim-pixel/studio/checks.html) and a [frame-by-frame film renderer](https://luzbel33.github.io/reclaim-pixel/studio/index.html) |
-
-## Reference
-
-Inspired by **[Post Humans by @zzzzshawn](https://x.com/zzzzshawn/status/2116436345082302946)**. [Explore the original on Forge.](https://forge.ui8.ai/share/frag_704ba1d5-05f4-44bf-bc62-34322dfaa1e1) Its compact city and year slider were the starting point. The artwork, code, fracture system and film in this repository were made for this independent recreation.

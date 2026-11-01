@@ -1,6 +1,8 @@
 (() => {
   'use strict';
   const el = (id) => document.getElementById(id);
+  const { FRAMES, FPS, W, H } = ReclaimFilm;
+  el('progress').max = FRAMES;
   let cancel = false,
     url;
   el('cancel').onclick = () => {
@@ -18,14 +20,14 @@
       const blob = await ReclaimFilm.encode(
         (n) => {
           el('progress').value = n;
-          el('status').textContent = 'Rendered ' + n + ' / 576 frames.';
+          el('status').textContent = 'Rendered ' + n + ' / ' + FRAMES + ' frames.';
         },
         () => cancel,
       );
       url = URL.createObjectURL(blob);
       el('save').href = url;
       el('save').hidden = false;
-      el('status').textContent = '576 frames ready · 24 fps · 1440 × 1260.';
+      el('status').textContent = `${FRAMES} frames ready · ${FPS} fps · ${W} × ${H}.`;
     } catch (e) {
       el('status').textContent = e.message;
     } finally {

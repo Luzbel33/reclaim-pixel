@@ -1,132 +1,73 @@
 const ReclaimFilm = (() => {
   'use strict';
   const FPS = 24,
-    FRAMES = 576,
-    W = 1440,
-    H = 1260;
-  const clamp = (x) => Math.max(0, Math.min(1, x)),
-    mix = (a, b, t) => a + (b - a) * t;
-  const smooth = (t) => t * t * (3 - 2 * t);
-  const ages = [
-    [0, 0],
-    [2, 0.06],
-    [4, 0.265],
-    [5, 0.295],
-    [8.8, 0.447],
-    [10, 0.468],
-    [13.7, 0.61],
-    [14.45, 0.635],
-    [19.9, 0.825],
-    [22.4, 1],
-    [24, 1],
+    FRAMES = 432,
+    W = 1080,
+    H = 1350;
+  const ink = '#26352c',
+    muted = '#53634e',
+    rule = '#c9d0c2';
+  // Both views sample one render. The detail can never drift from the main clock.
+  const ageAt = (frame) => Math.max(0, Math.min(1, (frame - 20) / 375));
+  const notes = [
+    [0, 'Market day', 'Buses cross the square.'],
+    [0.17, 'Sidewalk gardens', 'Tree crowns fill the streets.'],
+    [0.3, 'The brickworks', 'The roof gives way on the right.'],
+    [0.48, 'East apartments', 'One corner falls into the street.'],
+    [0.64, 'The tower opens', 'Slabs fall from the front corner.'],
+    [0.84, 'An indoor forest', 'Ferns take root in the open rooms.'],
   ];
-  // Each cut advances the same clock. Camera targets are fixed points in the city.
-  const shots = [
-    {
-      end: 3.85,
-      name: 'Market square',
-      target: [12, 12, 1.6],
-      yaw: [-5, 1],
-      pitch: [30, 31],
-      zoom: [1, 1.04],
-      center: 181,
-    },
-    {
-      end: 9.25,
-      name: 'The old brickworks',
-      target: [18.4, 4.25, 1.7],
-      yaw: [-17, -32],
-      pitch: [28, 37],
-      zoom: [2.18, 2.48],
-      center: 179,
-    },
-    {
-      end: 13.75,
-      name: 'East apartments',
-      target: [21.1, 11.2, 1.45],
-      yaw: [7, 18],
-      pitch: [30, 36],
-      zoom: [2.04, 2.27],
-      center: 181,
-    },
-    {
-      end: 20.7,
-      name: 'The transfer floor',
-      target: [4.55, 4.5, 4.1],
-      yaw: [-10, 13],
-      pitch: [25, 35],
-      zoom: [1.89, 2.15],
-      center: 181,
-    },
-    {
-      end: 24,
-      name: 'What remains',
-      target: [12, 12, 1.4],
-      yaw: [12, 0],
-      pitch: [39, 33],
-      zoom: [1.03, 1],
-      center: 184,
-    },
-  ];
-  function atTime(t) {
-    const k = ages.findIndex((a, i) => i > 0 && t <= a[0]),
-      end = ages[k < 0 ? ages.length - 1 : k],
-      start = ages[k < 0 ? ages.length - 2 : k - 1];
-    return mix(start[1], end[1], clamp((t - start[0]) / (end[0] - start[0])));
-  }
   function create() {
     const native = document.createElement('canvas');
     native.width = 480;
     native.height = 360;
-    const city = ReclaimCity.createCity(native),
-      film = document.createElement('canvas');
+    const city = ReclaimCity.createCity(native);
+    const film = document.createElement('canvas');
     film.width = W;
     film.height = H;
     const c = film.getContext('2d', { alpha: false });
     c.imageSmoothingEnabled = false;
+    function type(s, x, y, font, color = ink, align = 'left') {
+      c.font = font;
+      c.fillStyle = color;
+      c.textAlign = align;
+      c.fillText(s, x, y);
+    }
     function frame(i) {
-      const t = i / FPS,
-        age = atTime(t),
-        idx = shots.findIndex((s) => t < s.end),
-        shot = shots[idx],
-        start = idx ? shots[idx - 1].end : 0;
-      const f = smooth(clamp((t - start) / (shot.end - start))),
-        zoom = mix(...shot.zoom, f);
-      city.setCamera({
-        angle: (mix(...shot.yaw, f) * Math.PI) / 180,
-        pitch: mix(...shot.pitch, f),
-        zoom,
-      });
-      const [x, y] = city.project(...shot.target);
-      city.setCamera({
-        offsetX: Math.round(-(x - 240) * zoom),
-        offsetY: Math.round(shot.center - 202 - (y - 202) * zoom),
-      });
-      city.render(age, 0, t, true);
+      const age = ageAt(i),
+        year = 2026 + Math.round(age * 100);
+      const [, title, caption] = notes.filter(([start]) => age >= start).at(-1);
+      city.render(age, 0, i / FPS, true);
       c.fillStyle = '#ffffff';
       c.fillRect(0, 0, W, H);
-      c.drawImage(native, 0, 0, 1440, 1080);
-      c.fillStyle = '#d2d5c7';
-      c.fillRect(85, 1098, 1270, 2);
-      c.fillStyle = '#737e64';
-      c.font = '500 18px Arial';
-      c.textAlign = 'left';
-      c.fillText('RECLAIM     /     A CENTURY AFTER US', 85, 1147);
-      c.font = '38px Georgia';
-      c.fillStyle = '#3e4939';
-      c.fillText(shot.name, 82, 1207);
-      c.font = '18px Arial';
-      c.fillStyle = '#858c78';
-      c.textAlign = 'right';
-      c.fillText('FIELD NOTE     0' + (idx + 1) + ' / 05', 1355, 1147);
-      c.font = '40px Georgia';
-      c.fillStyle = '#3e4939';
-      c.fillText(String(2026 + Math.round(age * 100)), 1355, 1207);
-      c.fillStyle = '#e1e3da';
-      c.fillRect(845, 1189, 317, 3);
-      c.fillStyle = '#84956b';
-      c.fillRect(845, 1189, Math.max(2, 317 * age), 3);
-      c.textAlign = 'left';
+      type('RECLAIM', 45, 55, 'bold 31px Arial');
+      type('A CENTURY AFTER US', W - 45, 55, '25px Arial', muted, 'right');
+      c.fillStyle = rule;
+      c.fillRect(45, 78, 990, 2);
+      type(String(year), 44, 185, '100px Georgia');
+      const left = 355,
+        span = 680;
+      c.fillStyle = rule;
+      c.fillRect(left, 148, span, 4);
+      c.fillStyle = muted;
+      c.fillRect(left, 148, Math.max(2, span * age), 4);
+      for (let j = 0; j <= 10; j++) c.fillRect(left + (j * span) / 10 - 1, 148, 2, j % 5 ? 9 : 14);
+      c.fillRect(left + Math.round(span * age) - 4, 137, 8, 23);
+      type('2026', left, 191, '25px Arial', muted);
+      type('2126', left + span, 191, '25px Arial', muted, 'right');
+      c.drawImage(native, 0, 0, 480, 335, 0, 212, 1080, 754);
+      c.fillStyle = '#f2f3ed';
+      c.fillRect(0, 982, W, H - 982);
+      c.fillStyle = '#ffffff';
+      c.fillRect(44, 1012, 315, 298);
+      c.drawImage(native, 170, 2, 155, 147, 44, 1012, 315, 298);
+      c.fillStyle = '#ffffff';
+      c.fillRect(44, 1274, 315, 36);
+      type('TOWER  /  DETAIL', 56, 1301, 'bold 23px Arial', muted);
+      type('IN THE CITY', 386, 1054, 'bold 25px Arial', muted);
+      type(title, 384, 1137, '52px Georgia');
+      type(caption, 386, 1193, '32px Arial');
+      type('Inspired by Post Humans · @zzzzshawn', 386, 1295, '25px Arial', muted);
       return film;
     }
     return { frame };
@@ -190,5 +131,5 @@ const ReclaimFilm = (() => {
       if (encoder.state !== 'closed') encoder.close();
     }
   }
-  return { create, encode, FRAMES, FPS };
+  return { create, encode, FRAMES, FPS, W, H };
 })();
